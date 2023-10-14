@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Home extends CI_controller{
+class Home extends CI_Controller{
 
     public function __construct(){
         parent::__construct();
@@ -13,7 +13,7 @@ class Home extends CI_controller{
 
     public function index (){
         $this->data['title'] = " pages as default ";
-        $this->data['page_title'] = "home";
+        $this->data['page_name'] = "home";
         $this->load->view('layout/index',$this->data);
     }
 
