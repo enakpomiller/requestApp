@@ -5,11 +5,18 @@
       <div class="content-wrapper d-flex align-items-stretch auth auth-img-bg">
         <div class="row flex-grow">
           <div class="col-lg-6 d-flex align-items-center justify-content-center">
+            
             <div class="auth-form-transparent text-left p-3">
-        
+            <?=$this->session->flashdata('msg_create')?>  
+           <?=$this->session->unset_userdata('msg_create')?>
               <h4 class="text-center"> <?=$title?> </h4>
+              <div class="text-danger text-center">
+                 <?=$this->session->flashdata('msg_error')?> 
+                 <?=$this->session->unset_userdata('msg_error')?>
+                </div>
+
               <h6 class="font-weight-light text-center mt-4"> Login To Your Dashboard</h6>
-              <form class="pt-3">
+              <form class="pt-3" action="<?=base_url('login')?>" method="POST">
 
                 <div class="form-group">
                   <label>Email</label>
@@ -19,7 +26,7 @@
                         <i class="far fa-envelope-open text-primary"></i>
                       </span>
                     </div>
-                    <input type="email" class="form-control form-control-lg border-left-0" placeholder="Email">
+                    <input type="email" name="email" class="form-control form-control-lg border-left-0" placeholder="Email">
                   </div>
                 </div>
 
@@ -31,7 +38,7 @@
                         <i class="fa fa-lock text-primary"></i>
                       </span>
                     </div>
-                    <input type="password" class="form-control form-control-lg border-left-0" id="exampleInputPassword" placeholder="Password">
+                    <input type="password" name="password" class="form-control form-control-lg border-left-0" id="exampleInputPassword" placeholder="Password">
                   </div>
                 </div>
                 <div class="mb-4">
@@ -43,7 +50,7 @@
                   </div>
                 </div>
                 <div class="mt-3">
-                  <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" href="../../index-2.html">SIGN UP</a>
+                  <button class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn"> Login </button>
                 </div>
                 <div class="text-center mt-4 font-weight-light">
                   Already have an account? <a href="<?=base_url('register')?>" class="text-primary">Signup</a>
@@ -53,7 +60,6 @@
           </div>
           <div class="col-lg-6 register-half-bg d-flex flex-row">
           <p class="text-white font-weight-medium text-center flex-grow align-self-end"> Create Account </p>
-
           </div>
         </div>
       </div>

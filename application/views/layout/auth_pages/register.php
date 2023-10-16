@@ -6,21 +6,23 @@
         <div class="row flex-grow">
           <div class="col-lg-6 d-flex align-items-center justify-content-center">
             <div class="auth-form-transparent text-left p-3">
-              <div class="brand-logo">
-                <img src="../../images/logo.svg" alt="logo">
-              </div>
-              <h4>New here?</h4>
-              <h6 class="font-weight-light">Join us today! It takes only few steps</h6>
-              <form class="pt-3">
+                <!-- <div class="brand-logo">
+                  <img src="../../images/logo.svg" alt="logo">
+                </div> -->
+                <h4 class="text-center"> <?=$title?>  </h4>
+              <h6 class="font-weight-light text-center mt-4"> Create your  account here </h6>
+              <div class="text-danger text-center"> <?=$this->session->flashdata('msg_error')?> </div>
+              <?=$this->session->unset_userdata('msg_error')?>
+              <?php echo form_open_multipart('register/process_registration'); ?>
                 <div class="form-group">
-                  <label>Username</label>
+                  <label>Full Names </label>
                   <div class="input-group">
                     <div class="input-group-prepend bg-transparent">
                       <span class="input-group-text bg-transparent border-right-0">
                         <i class="fa fa-user text-primary"></i>
                       </span>
                     </div>
-                    <input type="text" class="form-control form-control-lg border-left-0" placeholder="Username">
+                    <input type="text" name="names" required class="form-control form-control-lg border-left-0" placeholder="full names ">
                   </div>
                 </div>
                 <div class="form-group">
@@ -31,12 +33,23 @@
                         <i class="far fa-envelope-open text-primary"></i>
                       </span>
                     </div>
-                    <input type="email" class="form-control form-control-lg border-left-0" placeholder="Email">
+                    <input type="email" required name="email" class="form-control form-control-lg border-left-0" placeholder="Email">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label> Upload Passport</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend bg-transparent">
+                      <span class="input-group-text bg-transparent border-right-0">
+                        <i class="far fa-file text-primary"></i>
+                      </span>
+                    </div>
+                    <input type="file" required name="userfile" class="form-control form-control-lg border-left-0" placeholder="Email">
                   </div>
                 </div>
                 <div class="form-group">
                   <label>Country</label>
-                  <select class="form-control form-control-lg" id="exampleFormControlSelect2">
+                  <select required name="country" class="form-control form-control-lg" id="exampleFormControlSelect2">
                     <option>Country</option>
                     <option>United States of America</option>
                     <option>United Kingdom</option>
@@ -53,7 +66,7 @@
                         <i class="fa fa-lock text-primary"></i>
                       </span>
                     </div>
-                    <input type="password" class="form-control form-control-lg border-left-0" id="exampleInputPassword" placeholder="Password">
+                    <input type="password" required name="password" class="form-control form-control-lg border-left-0" id="exampleInputPassword" placeholder="Password">
                   </div>
                 </div>
                 <div class="mb-4">
@@ -65,12 +78,13 @@
                   </div>
                 </div>
                 <div class="mt-3">
-                  <a class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn" href="../../index-2.html">SIGN UP</a>
+                  <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">Sign Up</button>
                 </div>
                 <div class="text-center mt-4 font-weight-light">
                   Already have an account? <a href="<?=base_url('login')?>" class="text-primary">Login</a>
                 </div>
-              </form>
+            
+          </form>
             </div>
           </div>
           <div class="col-lg-6 register-half-bg d-flex flex-row">

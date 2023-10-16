@@ -30,7 +30,12 @@
       <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
         <a class="navbar-brand brand-logo" href="index-2.html">
             <!-- <img src="<?=base_url()?>assets/images/logo.svg" alt="logo"/></a> -->
-            <h4 style="color:#000000;"> Request Board </h4> 
+            <?php if($this->session->category=='student'){ ?>
+
+             <h5 style="color:#000000;"> Student Request  Board</h5> 
+            <?php }else{?>
+              <h4 style="color:#000000;"> Admin Board  </h4> 
+             <?php }?>
         <a class="navbar-brand brand-logo-mini" href="index-2.html"><img src="images/logo-mini.svg" alt="logo"/></a>
       </div>
       <div class="navbar-menu-wrapper d-flex align-items-stretch">
@@ -199,7 +204,7 @@
                 Settings
               </a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item">
+              <a class="dropdown-item" href="<?=base_url('login/logout')?>">
                 <i class="fas fa-power-off text-primary"></i>
                 Logout
               </a>

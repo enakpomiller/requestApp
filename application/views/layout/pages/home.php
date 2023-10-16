@@ -5,8 +5,8 @@
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="page-header">
-            <h3 class="page-title">
-             <a href="<?=base_url('home/register')?>">  Dashboard </a>
+            <h3 class="page-title" ">
+             <a href="<?=base_url('')?>" class="text-dark">  Dashboard </a>
             </h3>
           </div>
           <div class="row grid-margin">
