@@ -11,7 +11,7 @@
            <?=$this->session->unset_userdata('msg_create')?>
               <h4 class="text-center"> <?=$title?> </h4>
               <div class="text-danger text-center">
-                <h5>  <?=$this->session->flashdata('msg_error')?> </h5>
+                 <?=$this->session->flashdata('msg_error')?> 
                  <?=$this->session->unset_userdata('msg_error')?>
                 </div>
 

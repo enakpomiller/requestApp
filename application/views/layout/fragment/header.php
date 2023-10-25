@@ -203,12 +203,22 @@
                 <i class="fas fa-cog text-primary"></i>
                 Settings
               </a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="<?=base_url('login/logout')?>">
-                <i class="fas fa-power-off text-primary"></i>
-                Logout
-              </a>
-            </div>
+              <?php if($this->session->category=='student') {?>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="<?=base_url('login/logout')?>">
+                    <i class="fas fa-power-off text-primary"></i>
+                    Logout
+                  </a>
+              </div>
+              <?php }else{?>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="<?=base_url('admin_login/logout')?>">
+                  <i class="fas fa-power-off text-primary"></i>
+                  Logout
+                </a>
+             </div>
+              <?php }?>
+   
           </li>
           <li class="nav-item nav-settings d-none d-lg-block">
             <a class="nav-link" href="#">

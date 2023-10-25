@@ -6,7 +6,7 @@
         <div class="content-wrapper">
           <div class="page-header">
             <h3 class="page-title" ">
-             <a href="<?=base_url('')?>" class="text-dark">  Request Feedback  </a>
+             <a href="<?=base_url('')?>" class="text-dark"> <?=$title?>  </a>
             </h3>
           </div>
 
@@ -15,37 +15,41 @@
             <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">
-           
-         <div class="table-responsive">
+                  <div class="table-responsive">
                  
-           <div class="col-md-10 grid-margin stretch-card" style="margin:auto;height:400px">
-           <?php if(($reqfeed)){ ?>
-           <table class="table table-striped">
-                  <thead class="bg-light">
-                    <tr>
-                      <th scope="col">S/n</th>
-                      <th scope="col">Response </th>
-                      <th scope="col"> Date </th>
-                      <th scope="col" class="text-center"> Action </th>
-                    </tr>
-                </thead>
-                <tbody>
-                  <?php $counter =1; foreach($reqfeed as $req) {  ?>
-                  <tr>
-                    <th scope="row"><?=$counter++?></th>
-                    <td><?=$req->replyreq?></td>
-                    <td><?=$req->date?></td>
-                    <td class="text-center">  
-                     <a href="<?=base_url('home/getreply/'.$req->id)?>" class="btn btn-dark pt-2 pb-2 pl-2 pr-2"><i class="fa fa-eye"></i> View </a>
-                     <a href="" class="btn btn-success pt-2 pb-2 pl-2 pr-2"><i class="fa fa-eye"></i> Edit </a>
-                  </td>
-                    </tr>
-                 <?php } ?>
-                </tbody>
-                </table>
-                <?php }else {?>
-                     <h3 class="text-center"> No Reply Yet   </h3>
-                  <?php  } ?>
+                    <div class="col-md-6 grid-margin stretch-card" style="margin:auto;">
+          
+               <?=$this->db->get_where('tbl_replyreq',array('id'=>'9'))->row()->reply_req?>
+                  <div class="card">
+                      <div class="card-body">
+                    <?php if($this->session->flashdata('msg_create')){ ?>
+                      <div class="alert alert-success text-center"> <?=$this->session->flashdata('msg_create')?> </div>
+                    <?php }else{?>
+                      <div class="text-success text-center">
+                          <?=$this->session->flashdata('msg_reply')?>
+                          <?=$this->session->unset_userdata('msg_reply')?>
+                          </div>
+                      <?php } ?>
+
+                  <h4 class="card-title"> Response</h4>
+                <form action="<?=base_url('home/getreply')?>" method="POST" class="forms-sample">
+                    <div class="form-group">
+                     <?php if(isset($reqfeed)) { ?>
+                        
+                            <input type="hidden" name="id" value="<?=$row->id?>"><br> 
+                            <label for="exampleInputPassword1"> Date: <?=$reqfeed->date?> </label>
+                            <textarea cols="55" rows="8" class="text-center bg-primary text-light pt-4" readonly name="requesttitle"><?=$reqfeed->replyreq?></textarea>  
+                   
+                        </div>
+                        <a href="<?=base_url('home/requestfeed')?>" class="btn btn-primary"> Return   </a>
+                    <?php }else{?>
+                        
+                      not found 
+                    <?php } ?>
+                
+                </form>
+                </div>
+              </div>
             </div>
 
                   </div>

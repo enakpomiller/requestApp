@@ -6,47 +6,61 @@
         <div class="content-wrapper">
           <div class="page-header">
             <h3 class="page-title" ">
-             <a href="<?=base_url('')?>" class="text-dark">  Request Feedback  </a>
+             <a href="<?=base_url('')?>" class="text-dark">  <?=$title?> </a>
             </h3>
           </div>
 
 
-          <div class="row">
+        <div class="row">
             <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">
            
          <div class="table-responsive">
-                 
-           <div class="col-md-10 grid-margin stretch-card" style="margin:auto;height:400px">
-           <?php if(($reqfeed)){ ?>
-           <table class="table table-striped">
-                  <thead class="bg-light">
-                    <tr>
-                      <th scope="col">S/n</th>
-                      <th scope="col">Response </th>
-                      <th scope="col"> Date </th>
-                      <th scope="col" class="text-center"> Action </th>
-                    </tr>
-                </thead>
-                <tbody>
-                  <?php $counter =1; foreach($reqfeed as $req) {  ?>
-                  <tr>
-                    <th scope="row"><?=$counter++?></th>
-                    <td><?=$req->replyreq?></td>
-                    <td><?=$req->date?></td>
-                    <td class="text-center">  
-                     <a href="<?=base_url('home/getreply/'.$req->id)?>" class="btn btn-dark pt-2 pb-2 pl-2 pr-2"><i class="fa fa-eye"></i> View </a>
-                     <a href="" class="btn btn-success pt-2 pb-2 pl-2 pr-2"><i class="fa fa-eye"></i> Edit </a>
-                  </td>
-                    </tr>
-                 <?php } ?>
-                </tbody>
-                </table>
-                <?php }else {?>
-                     <h3 class="text-center"> No Reply Yet   </h3>
-                  <?php  } ?>
-            </div>
+             <div class="row">
+              <?php  if($this->session->flashdata('msg_del')){?>
+                 <div class="text-center text-danger">
+                   <?=$this->session->flashdata('msg_del')?>
+                   <?=$this->session->unset_userdata('msg_del')?>
+                </div>
+                <?php }?>
+       
+                     <div class="col-md-12">
+                        <?php if($request) { ?>
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">s/n</th>
+                                <th scope="col"> Names</th>
+                                <th scope="col"> Email</th>
+                                <th scope="col">Request Title </th>
+                                <th scope="col"> Reasons </th>
+                                <th scope="col" class="text-center"> Action </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            <?php $count =1; foreach($request as $row){?>
+                                <tr>
+                                  <th scope="row"><?=$count++?></th>
+                                  <td> <?=$row->names?></td>
+                                  <td> <?=$row->email?></td>
+                                  <td> <?=$row->requesttitle?></td>
+                                  <td> <?=$row->reasons?></td>
+                                  <td> 
+                                  <a href="<?=base_url('home/viewreq/'.$row->id)?>" class="btn btn-primary pt-2 pb-2 pr-2 pl-2"><i class="fa fa-eye"></i> View </a>
+                                  <a href="<?=base_url('home/deletereq/'.$row->user_id)?>" class="btn btn-danger pt-2 pb-2 pr-2 pl-2"><i class="fa fa-eye" onclick="return confirm  ('Are Your Sure To Delete?')"></i>Delete </a>
+                              </td>
+                            </tr>
+                            <?php } ?>
+                  
+                            </tbody>
+                          </table>
+                          <?php }else{?>
+                               <h4 class="text-center">  No Request Yet  </h4> 
+                           <?php } ?>
+                    </div> 
+             </div>
+
 
                   </div>
                 </div>
