@@ -32,7 +32,7 @@ class Home_m extends CI_model{
   public function allrequest(){
       $this->db->select('*');
       $this->db->from('tbl_users');
-        //$this->db->join('tbl_request','tbl_users.id = tbl_request.user_id');
+      $this->db->join('tbl_request','tbl_users.id = tbl_request.user_id');
       $query = $this->db->get();
       return $query->result();
   }

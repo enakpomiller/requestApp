@@ -24,6 +24,7 @@
                   <thead class="bg-light">
                     <tr>
                       <th scope="col">S/n</th>
+                      <th scope="col"> Status </th>
                       <th scope="col">Response </th>
                       <th scope="col"> Date </th>
                       <th scope="col" class="text-center"> Action </th>
@@ -33,20 +34,32 @@
                   <?php $counter =1; foreach($reqfeed as $req) {  ?>
                   <tr>
                     <th scope="row"><?=$counter++?></th>
-                    <td><?=$req->replyreq?></td>
+                         <?php 
+                           $status = $this->db->get_where('tbl_replyreq',array('timer'=>$req->timer))->row()->status;
+                           $getstatus = $status=='1'?'<div style="background:green;padding:10px;color:white;" class="text-center">  Received & Replied </div>':'<div style="background:red;padding:10px;color:white;" class="text-center">Request Pending </div>';
+                         ?>
+                    <td>
+                      <?=$getstatus?>   
+                    </td>
+                    <td><?=$req->requesttitle?></td>
                     <td><?=$req->date?></td>
                     <td class="text-center">  
-                     <a href="<?=base_url('home/getreply/'.$req->id)?>" class="btn btn-dark pt-2 pb-2 pl-2 pr-2"><i class="fa fa-eye"></i> View </a>
-                     <a href="" class="btn btn-success pt-2 pb-2 pl-2 pr-2"><i class="fa fa-eye"></i> Edit </a>
+                      <?php if($status=='1') {?>
+                          <a href="<?=base_url('home/getreply/'.$req->timer)?>" class="btn btn-dark pt-2 pb-2 pl-2 pr-2"><i class="fa fa-eye"></i> View Reply </a>
+                     <?php }else{?>
+                      <a href="" class="btn btn-dark pt-2 pb-2 pl-2 pr-2" onclick="alert('Sorry! this request cannot be accessed,please wait depending when it will be approved')"><i class="fa fa-eye"></i> View Reply </a>
+                       <?php } ?>
+                     <!-- <a href="<?=base_url('home/deletefeed/'.$req->id)?>" class="btn btn-danger pt-2 pb-2 pl-2 pr-2" onclick="return confirm('Are Your Sure To Delete?')"><i class="fa fa-eye"></i> Delete </a> -->
                   </td>
                     </tr>
-                 <?php } ?>
+                <?php } ?>
                 </tbody>
                 </table>
                 <?php }else {?>
-                     <h3 class="text-center"> No Reply Yet   </h3>
-                  <?php  } ?>
-            </div>
+                    <h3 class="text-light" style="margin-right:50px;"> No Reply Yet   </h3>
+                     <img src="<?=base_url()?>assets/images/404.png">
+             <?php } ?>
+          </div>
 
                   </div>
                 </div>

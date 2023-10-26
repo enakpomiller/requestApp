@@ -15,15 +15,23 @@
             <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">
-           
-         <div class="table-responsive">
-             <div class="row">
-              <?php  if($this->session->flashdata('msg_del')){?>
+                <?php  if($this->session->flashdata('msg_reply')){?>
+                 <div class="text-center text-success">
+                   <?=$this->session->flashdata('msg_reply')?>
+                   </div>
+                   <?=$this->session->unset_userdata('msg_reply')?>
+                
+                <?php }?>
+
+                <?php  if($this->session->flashdata('msg_del')){?>
                  <div class="text-center text-danger">
                    <?=$this->session->flashdata('msg_del')?>
                    <?=$this->session->unset_userdata('msg_del')?>
                 </div>
                 <?php }?>
+           
+         <div class="table-responsive">
+             <div class="row">
        
                      <div class="col-md-12">
                         <?php if($request) { ?>
@@ -31,9 +39,11 @@
                             <thead>
                               <tr>
                                 <th scope="col">s/n</th>
+                                <th scope="col"> Status</th>
                                 <th scope="col"> Names</th>
                                 <th scope="col"> Email</th>
                                 <th scope="col">Request Title </th>
+                                
                                 <th scope="col"> Reasons </th>
                                 <th scope="col" class="text-center"> Action </th>
                               </tr>
@@ -42,13 +52,21 @@
                             <?php $count =1; foreach($request as $row){?>
                                 <tr>
                                   <th scope="row"><?=$count++?></th>
+                                  <td> 
+                                     <?php 
+                                        $status =  $this->db->get_where('tbl_replyreq',array('timer'=>$row->timer))->row()->status;
+                                        // echo $status = $status=='1'?'replied':'pending';
+                                       ?>
+                                       <input type="checkbox" <?=$status=$status=='1'?'checked':''?>>
+                                  </td>
                                   <td> <?=$row->names?></td>
                                   <td> <?=$row->email?></td>
-                                  <td> <?=$row->requesttitle?></td>
+                                  <td> <?=$row->title?></td>
+                                
                                   <td> <?=$row->reasons?></td>
-                                  <td> 
+                                  <td align="center"> 
                                   <a href="<?=base_url('home/viewreq/'.$row->id)?>" class="btn btn-primary pt-2 pb-2 pr-2 pl-2"><i class="fa fa-eye"></i> View </a>
-                                  <a href="<?=base_url('home/deletereq/'.$row->user_id)?>" class="btn btn-danger pt-2 pb-2 pr-2 pl-2"><i class="fa fa-eye" onclick="return confirm  ('Are Your Sure To Delete?')"></i>Delete </a>
+                                  <a href="<?=base_url('home/deletereq/'.$row->user_id)?>" class="btn btn-danger pt-2 pb-2 pr-2 pl-2" onclick="return confirm('Do you wish to delete?')"><i class="fa fa-eye"></i>Delete </a>
                               </td>
                             </tr>
                             <?php } ?>

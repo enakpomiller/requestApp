@@ -30,6 +30,10 @@
                   <h4 class="card-title"> Request  form</h4>
                   
                 <form action="<?=base_url('home/create_request')?>" method="POST" class="forms-sample">
+                <div class="form-group">
+                      <p for="exampleInputPassword1"> Title </p>
+                       <input type="text" name="title">
+                    </div>
                     <div class="form-group">
                       <label for="exampleInputPassword1"> State Your Request </label>
                       <textarea cols="55" rows="10" name="requesttitle"></textarea>

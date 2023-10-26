@@ -31,13 +31,17 @@
                           </div>
                       <?php } ?>
 
-                  <h4 class="card-title"> Response</h4>
+                 
                 <form action="<?=base_url('home/getreply')?>" method="POST" class="forms-sample">
                     <div class="form-group">
+                                   
+
                      <?php if(isset($reqfeed)) { ?>
-                        
                             <input type="hidden" name="id" value="<?=$row->id?>"><br> 
-                            <label for="exampleInputPassword1"> Date: <?=$reqfeed->date?> </label>
+                            <label for="exampleInputPassword1""> Date: <?=$reqfeed->date?> </label>
+                            <p class="card-title"> Request </p>
+                            <textarea cols="55" rows="5" class="bg-light text-center"> <?=$timer->requesttitle?>  </textarea>
+                            <p class="card-title"> Response</p>
                             <textarea cols="55" rows="8" class="text-center bg-primary text-light pt-4" readonly name="requesttitle"><?=$reqfeed->replyreq?></textarea>  
                    
                         </div>

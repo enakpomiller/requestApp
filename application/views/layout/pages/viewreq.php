@@ -21,12 +21,16 @@
                <div class="col-md-6 grid-margin stretch-card"  style="margin:auto;">
                  <div class="card">
                     <div class="card-body">
+                      <?php if($this->session->unset_userdata('msg_reply')){ ?>
                     <div class="text-success text-center">
-                       
                         <?=$this->session->unset_userdata('msg_reply')?>
                         </div>
-                     
-                    <h4 class="card-title"> Request  from  <?=$this->db->get_where('tbl_users',array('id'=>$this->uri->segment(3)))->row()->names?> </h4>
+                        <?php }?>
+                        <?php 
+                         $user = $this->db->get_where('tbl_request',array('id'=>$this->uri->segment(3)))->row()->user_id;
+                         
+                        ?>
+                    <h4 class="card-title"> Request  from  <?=$this->db->get_where('tbl_users',array('id'=>$user ))->row()->names?> </h4>
                     <form action="<?=base_url('home/viewreq')?>" method="POST" class="forms-sample">
                         <div class="form-group">
                         <?php foreach($request as $row){  ?>
@@ -40,7 +44,7 @@
                         </div>
                         <div class="form-group">
                           <label for="exampleInputConfirmPassword1"> Reply </label>
-                          <textarea cols="55" rows="5" required name="replyreq"></textarea>
+                          <textarea cols="55" rows="5" required value="<?=set_value('replyreq')?>" name="replyreq"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary mr-2"> Reply Request x</button>
                         <a href="<?=base_url('home/admin_viewreq')?>" class="btn btn-dark">  Return </a>

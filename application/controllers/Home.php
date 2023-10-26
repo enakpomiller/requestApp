@@ -30,13 +30,14 @@ class Home extends CI_Controller{
     public function create_request(){
    
         if($_POST){
-            $data =[
-                'user_id'=>$this->session->id,
-                'requesttitle'=>$this->input->post('requesttitle'),
-                'reasons'=>$this->input->post('reasons'),
-                'date'=>$this->input->post('date'),
-                'timer'=>date('i:sa')
-            ];
+                $data =[
+                    'user_id'=>$this->session->id,
+                    'title'=>$this->input->post('title'),
+                    'requesttitle'=>$this->input->post('requesttitle'),
+                    'reasons'=>$this->input->post('reasons'),
+                    'date'=>$this->input->post('date'),
+                    'timer'=>date('i:sa')
+                ];
             $insert = $this->db->insert('tbl_request',$data);
             if($insert){
                $this->session->set_flashdata('msg_create',' Your Request Has Been Sent ');
@@ -56,27 +57,34 @@ class Home extends CI_Controller{
      public function requestfeed(){
         $this->data['title'] = " Request FeedBack ";
         $user_id = $this->session->userdata('id');
-        $this->data['reqfeed'] = $this->db->get_where('tbl_replyreq',array('user_id'=>$user_id))->result();
-      
+        $this->data['reqfeed'] = $this->db->get_where('tbl_request',array('user_id'=>$user_id))->result();
+         //echo "<pre>"; print_r($this->data['reqfeed']);die;
         $this->data['page_name'] = "requestfeed";
         $this->load->view('layout/index',$this->data);
      }
+
+     public function deletefeed($id){
+       var_dump($id);die;
+    }
   
      public function admin_viewreq(){
         $this->data['title'] = " View Request  ";
         $this->data['request'] = $this->home_m->allrequest();
+        // echo "<pre>"; print_r($this->data['request']);die;
         $this->data['page_name'] = "admin_viewreq";
         $this->load->view('layout/index',$this->data);
      }
 
      public function getreply($id){
-        $user_id = $this->session->userdata('id');
+        $user_id = $this->session->userdata('id'); 
         if($_POST){
         
         }else{
         $this->data['title'] = " View Reply  ";
            //$this->data['reqfeed'] = $this->db->get_where('tbl_replyreq',array('user_id'=>$user_id))->result();
-        $this->data['reqfeed'] = $this->db->get_where('tbl_replyreq',array('id'=>$id))->row();
+        $this->data['reqfeed'] = $this->db->get_where('tbl_replyreq',array('timer'=>$id))->row();
+        $this->data['timer'] = $this->db->get_where('tbl_request',array('timer'=>($this->data['reqfeed']->timer) ))->row();
+
             //$this->data['replyfeed'] = $this->db->get_where('tbl_replyreq',array('user_id'=>$user_id))->result();
             //echo "<pre>"; print_r($this->data['reqfeed']);die;
         $this->data['page_name'] = "getreply";
@@ -91,32 +99,32 @@ class Home extends CI_Controller{
                  'user_id'=>$this->input->post('user_id'),
                  'replyreq'=>$this->input->post('replyreq'),
                  'date'=>date('Y-M-D'),
-                 'timer'=>$this->input->post('timer')
+                 'timer'=>$this->input->post('timer'),
+                 'status'=>'1'
                ];
+               $this->db->insert('tbl_replyreq',$data);
                 $this->session->set_flashdata('msg_reply',' Reply Send Successfully');
-                $this->db->insert('tbl_replyreq',$data);
-               return redirect(base_url('home/viewreq/'.$user_id));
+                return redirect(base_url('home/admin_viewreq'));
           }else{
             $id = $this->uri->segment(3);
             $this->data['title'] = " Reply Request  ";
                 //$this->data['request'] = $this->db->get_where('tbl_replyreq',array('user_id'=>$userid))->result();
-            $this->data['request'] = $this->db->get_where('tbl_request',array('user_id'=>$id))->result();
-            // var_dump($this->data['request']);die;
+            $this->data['request'] = $this->db->get_where('tbl_request',array('id'=>$id))->result();
+            //  var_dump($this->data['request']);die;
             $this->data['page_name'] = "viewreq";
             $this->load->view('layout/index',$this->data);
            }
      
      }
     
-     public function deletereq($user_id){
-
-        $this->db->where('id',$user_id);
+     public function deletereq($id){
+         $this->db->where('id',$id);
          $del = $this->db->delete('tbl_users');
          if($del){
-            $this->db->where('user_id',$user_id);
+            $this->db->where('user_id',$id);
             $this->db->delete('tbl_request');
 
-            $this->db->where('user_id',$user_id);
+            $this->db->where('user_id',$id);
             $this->db->delete('tbl_replyreq');
 
             $this->session->set_flashdata('msg_del',' Delete action was successful');
